@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>I Love You NIMCO - Jacayl & Muusig</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', 'Poppins', 'Quicksand', system-ui, sans-serif;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* BACKGROUND-KA MUUSIG & QALBIYADA - NOOC QURUX BADAN */
+        .music-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .music-item {
+            position: absolute;
+            animation: floatMusical 8s ease-in-out infinite;
+            opacity: 0.7;
+            filter: drop-shadow(0 0 5px rgba(255,255,200,0.5));
+            user-select: none;
+        }
+
+        /* noocyada kala duwan */
+        .music-item.heart {
+            animation: floatHeart 8s ease-in-out infinite;
+        }
+        .music-item.note {
+            animation: floatNote 9s ease-in-out infinite;
+        }
+        .music-item.star {
+            animation: floatStar 7s ease-in-out infinite;
+        }
+
+        @keyframes floatMusical {
+            0% {
+                transform: translateY(100vh) translateX(-20px) rotate(0deg) scale(0.3);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.7;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(20px) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) scale(0.2) rotate(0deg);
+                opacity: 0;
+            }
+            30% {
+                transform: translateY(60vh) scale(0.8) rotate(15deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(0.4) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatNote {
+            0% {
+                transform: translateY(110vh) translateX(0) rotate(-10deg) scale(0.4);
+                opacity: 0;
+            }
+            50% {
+                transform: translateY(50vh) translateX(-15px) rotate(10deg) scale(1);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-15vh) translateX(15px) rotate(20deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatStar {
+            0% {
+                transform: translateY(90vh) scale(0.3) rotate(0deg);
+                opacity: 0;
+            }
+            40% {
+                transform: translateY(40vh) scale(0.9) rotate(180deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-20vh) scale(0.4) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* KAARKA WEYN - QURUX BADAN */
+        .love-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 2rem;
+            padding: 2rem;
+            text-align: center;
+            width: 100%;
+            max-width: 550px;
+            z-index: 2;
+            animation: cardGlow 0.8s ease-out, fadeInScale 0.6s ease-out;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes cardGlow {
+            0% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+            100% { box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.3); }
+        }
+
+        /* SAWIRKA GABADHA */
+        .image-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .main-girl-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.8);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: #fff;
+        }
+        .main-girl-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .ring {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,215,0,0.6);
+            animation: ringPulse 2s ease infinite;
+            pointer-events: none;
+        }
+
+        @keyframes ringPulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.15); opacity: 0; }
+        }
+
+        /* QALBI WEYN */
+        .big-heart {
+            font-size: 4.5rem;
+            animation: heartbeat 1.4s ease infinite;
+            display: inline-block;
+            margin: 15px 0 5px;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.25); text-shadow: 0 0 20px #ff6b9d; }
+        }
+
+        /* QORAALKA */
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #ffe6b3, #ffb347);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+            margin: 5px 0;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .love-message {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            border-radius: 60px;
+            padding: 0.6rem 1.8rem;
+            display: inline-block;
+            font-weight: bold;
+            color: #fff;
+            margin: 15px 0;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        /* AUDIO PLAYER - QURUX BADAN */
+        .audio-section {
+            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .audio-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        audio {
+            width: 100%;
+            border-radius: 40px;
+            outline: none;
+            height: 45px;
+        }
+        audio::-webkit-media-controls-panel {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            border-radius: 40px;
+        }
+
+        /* BADHANKA */
+        .btn-love {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border: none;
+            padding: 12px 32px;
+            border-radius: 60px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            letter-spacing: 1px;
+        }
+        .btn-love:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #ff8e8e, #ff6b4a);
+        }
+        .btn-love:active {
+            transform: translateY(2px);
+        }
+
+        .extra-quote {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            border-radius: 40px;
+            padding: 12px;
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 550px) {
+            .love-card { padding: 1.5rem; margin: 10px; }
+            h1 { font-size: 2.2rem; }
+            .main-girl-img { width: 110px; height: 110px; }
+            .big-heart { font-size: 3.5rem; }
+            .love-message { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- BACKGROUND KA MUUSIG IYO JACAYL -->
+<div class="music-bg" id="musicBg"></div>
+
+<div class="love-card">
+    <div class="image-wrapper">
+        <img id="mainGirlImage" class="main-girl-img" src="https://cdn.pixabay.com/photo/2023/05/04/14/44/woman-7970171_640.jpg" alt="Nimco">
+        <div class="ring"></div>
+    </div>
+    
+    <div class="big-heart">❤️</div>
+    <h1>NIMCO</h1>
+    <div class="love-message">🦇Bat-girl🦇</div>
+    
+    <!-- QAYBTA CODKA / HEESTA -->
+    <div class="audio-section">
+        <div class="audio-title">
+            <span>🎵</span> Had maan ku healyaa<span>🎶</span>
+        </div>
+        <audio id="loveSong" controls autoplay loop="metadata">
+            <source src="video.mp4" type="audio/mpeg">
+            
+        </audio>
+        
+    </div>
+
+    <div class="extra-quote" id="dynamicMsg">
+        “You r a unique girl”
+    </div>
+    
+    <button class="btn-love" id="extraLoveBtn">✨ more✨</button>
+
+    <button onclick="goBack()">🔙 Back</button>
+</div>
+
+<script>
+   
+    const musicBg = document.getElementById('musicBg');
+    
+    // Astaamaha kala duwan - qurux badan
+    const symbolsList = [
+        { symbol: "♪", type: "note", size: [20, 45] },
+        { symbol: "♫", type: "note", size: [22, 48] },
+        { symbol: "🎵", type: "note", size: [24, 50] },
+        { symbol: "🎶", type: "note", size: [26, 52] },
+        { symbol: "♩", type: "note", size: [18, 42] },
+        { symbol: "🎵", type: "note", size: [22, 48] },
+        { symbol: "❤️", type: "heart", size: [20, 50] },
+        { symbol: "💖", type: "heart", size: [22, 52] },
+        { symbol: "💗", type: "heart", size: [20, 48] },
+        { symbol: "💓", type: "heart", size: [18, 45] },
+        { symbol: "✨", type: "star", size: [16, 40] },
+        { symbol: "⭐", type: "star", size: [18, 42] },
+        { symbol: "💫", type: "star", size: [20, 44] },
+        { symbol: "🎶", type: "note", size: [24, 50] },
+        { symbol: "🎤", type: "note", size: [22, 48] }
+    ];
+    
+    function createMusicElement() {
+        const randomIndex = Math.floor(Math.random() * symbolsList.length);
+        const item = symbolsList[randomIndex];
+        const size = Math.floor(Math.random() * (item.size[1] - item.size[0]) + item.size[0]);
+        
+        const div = document.createElement('div');
+        div.classList.add('music-item', item.type);
+        div.innerText = item.symbol;
+        div.style.fontSize = size + 'px';
+        div.style.left = Math.random() * 100 + '%';
+        div.style.animationDuration = (Math.random() * 8 + 6) + 's';
+        div.style.animationDelay = (Math.random() * 10) + 's';
+        div.style.opacity = Math.random() * 0.55 + 0.3;
+        
+        // midab kala duwan qalbiyada
+        if(item.type === 'heart') {
+            div.style.color = `hsl(${Math.random() * 20 + 340}, 80%, 65%)`;
+        } else if(item.type === 'star') {
+            div.style.color = `hsl(${Math.random() * 30 + 45}, 90%, 65%)`;
+        } else {
+            div.style.color = `hsl(${Math.random() * 30 + 280}, 70%, 70%)`;
+        }
+        
+        musicBg.appendChild(div);
+        
+        setTimeout(() => {
+            if(div && div.remove) div.remove();
+        }, 15000);
+    }
+    
+    // samee background element-yo badan
+    for(let i = 0; i < 50; i++) {
+        setTimeout(() => createMusicElement(), i * 120);
+    }
+    
+    // si joogto ah u shaqeeyo background-ka
+    let bgInterval = setInterval(() => {
+        createMusicElement();
+    }, 350);
+    
+    // nadiifi interval marka bogga la xiro
+    window.addEventListener('beforeunload', () => {
+        if(bgInterval) clearInterval(bgInterval);
+    });
+    
+    // ============================================================
+    // SAWIRRADA GABADHA - HADDII AAD RABTO IN AAD BEDDESHO
+    // ============================================================
+    // Halkan ku qor URL-ga sawirka gabadha (waxaad bedeli kartaa)
+    const SAWIRKA_WEYN = "nimco.jpeg";
+    
+    const mainImg = document.getElementById('mainGirlImage');
+    mainImg.src = SAWIRKA_WEYN;
+    
+    // Haddii sawirka uu qalado, ku beddel mid damaanad qaba
+    mainImg.onerror = () => {
+        mainImg.src = "https://cdn-icons-png.flaticon.com/512/4140/4140048.png";
+    };
+    
+    // ============================================================
+    // QALBIYADA FARXADDA (MARKA LA RIIXO BADHANKA)
+    // ============================================================
+    function addFloatingHeartEffect() {
+        const tempHeart = document.createElement('div');
+        tempHeart.style.position = 'fixed';
+        tempHeart.style.bottom = '0px';
+        tempHeart.style.left = Math.random() * 100 + '%';
+        tempHeart.style.fontSize = Math.floor(Math.random() * 35 + 25) + 'px';
+        tempHeart.style.pointerEvents = 'none';
+        tempHeart.style.zIndex = '999';
+        tempHeart.innerText = ['❤️', '💖', '💗', '💓', '💘'][Math.floor(Math.random() * 5)];
+        tempHeart.style.animation = 'floatHeart 1.2s ease-out forwards';
+        tempHeart.style.opacity = '0.9';
+        document.body.appendChild(tempHeart);
+        setTimeout(() => tempHeart.remove(), 1200);
+    }
+    
+    // ============================================================
+    // BADHANKA IYO FARIIMAHA
+    // ============================================================
+    const loveBtn = document.getElementById('extraLoveBtn');
+    const dynamicMsgDiv = document.getElementById('dynamicMsg');
+    
+    const messages = [
+        "Eray waa ka qiimo badantahy",
+        "🌟🌟",
+        "..........?????",
+        "💫 hadalka igu yar 💫",
+        "✨ star ✨",
+        "🎀 batgirl 🎀",
+        "💕 Waxaan kuu jeclahay ilaa weligeed 💕"
+    ];
+    
+    let msgIndex = 0;
+    
+    loveBtn.addEventListener('click', () => {
+        // beddel farriinta si qurux badan
+        dynamicMsgDiv.style.opacity = '0';
+        dynamicMsgDiv.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            dynamicMsgDiv.innerText = messages[msgIndex % messages.length];
+            dynamicMsgDiv.style.opacity = '1';
+            dynamicMsgDiv.style.transform = 'scale(1)';
+            msgIndex++;
+        }, 200);
+        
+        // animation qalbiga weyn
+        const bigHeart = document.querySelector('.big-heart');
+        bigHeart.style.animation = 'none';
+        setTimeout(() => {
+            bigHeart.style.animation = 'heartbeat 1.4s ease infinite';
+        }, 50);
+        
+        // qalbiyo badan oo farxad ah
+        for(let i = 0; i < 10; i++) {
+            setTimeout(() => addFloatingHeartEffect(), i * 70);
+        }
+        
+        // isbeddel yar oo kaarka ah
+        const card = document.querySelector('.love-card');
+        card.style.transform = 'scale(0.99)';
+        setTimeout(() => {
+            card.style.transform = 'scale(1)';
+        }, 150);
+    });
+    function goBack(){
+    window.history.back();
+}
+    
+    // console farriin
+    console.log("✅ NIMCO - Bog qurux badan oo jacayl & muusig leh! 🎵❤️");
+</script>
+</body>
+</html>
