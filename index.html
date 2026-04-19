@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Stop Messing With Me </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #ff6b8b 0%, #ff4d6d 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+            padding: 16px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Mobile-first responsive container */
+        .screen {
+            max-width: 550px;
+            width: 100%;
+            text-align: center;
+            padding: 20px 12px 30px;
+            position: relative;
+            margin: 0 auto;
+            transition: all 0.2s ease;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 8vw, 3rem);
+            color: white;
+            margin-bottom: 12px;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+            letter-spacing: -0.5px;
+            word-break: keep-all;
+        }
+
+        .question {
+            font-size: clamp(1.3rem, 5.5vw, 2rem);
+            margin: 20px 0 40px;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 20px;
+            border-radius: 80px;
+            display: inline-block;
+            color: #c44569;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(2px);
+            max-width: 90%;
+            word-break: break-word;
+        }
+
+        /* BUTTONS AREA - fully responsive, dynamic container */
+        .buttons-area {
+            position: relative;
+            min-height: 380px;
+            width: 100%;
+            margin: 0 auto;
+            border-radius: 48px;
+            overflow: visible;
+            touch-action: manipulation;
+        }
+
+        .yes-btn {
+            background-color: #ff4d6d;
+            color: white;
+            font-size: clamp(1.6rem, 6vw, 2.2rem);
+            font-weight: bold;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.08s linear;
+            box-shadow: 0 6px 0 #b0003a;
+            min-width: 130px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            white-space: nowrap;
+            font-family: inherit;
+            letter-spacing: 1px;
+        }
+
+        .no-btn {
+            background-color: #6c757d;
+            color: white;
+            font-size: clamp(1.4rem, 5.5vw, 2rem);
+            font-weight: bold;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.1s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 6px 0 #3a3f44;
+            min-width: 120px;
+            position: absolute;
+            z-index: 10;
+            white-space: nowrap;
+            font-family: inherit;
+            touch-action: manipulation;
+        }
+
+        .yes-btn:active {
+            transform: translate(-50%, -50%) translateY(4px);
+            box-shadow: 0 2px 0 #b0003a;
+        }
+
+        /* Micro animations */
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.92); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0px) rotate(0deg); }
+            25% { transform: translateX(6px) rotate(2deg); }
+            75% { transform: translateX(-6px) rotate(-2deg); }
+            100% { transform: translateX(0px) rotate(0deg); }
+        }
+
+        .no-btn:active {
+            animation: pop 0.1s ease;
+        }
+
+        /* Hidden counters but functional (fully hidden) */
+        .counter, .upload-area, footer {
+            display: none;
+        }
+
+        /* FINAL SCREEN STYLES - perfect responsive */
+        .final-screen {
+            text-align: center;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            animation: fadeInUp 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .final-image {
+            max-width: 92%;
+            width: auto;
+            max-height: 55vh;
+            object-fit: contain;
+            border-radius: 42px;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.25);
+            animation: bounceSoft 0.55s ease;
+            border: 4px solid rgba(255,255,240,0.8);
+        }
+
+        .final-text {
+            font-size: clamp(1.3rem, 6vw, 2.2rem);
+            font-weight: bold;
+            color: white;
+            margin-top: 8px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(12px);
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 80px;
+            letter-spacing: -0.3px;
+            max-width: 90%;
+            word-break: break-word;
+        }
+
+        @keyframes bounceSoft {
+            0% { transform: scale(0.75); opacity: 0; }
+            70% { transform: scale(1.02); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reset-btn {
+            margin-top: 12px;
+            background: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            color: #ff4d6d;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s, background 0.2s;
+            font-family: inherit;
+        }
+
+        .reset-btn:active {
+            transform: scale(0.96);
+            background: #fff0f2;
+        }
+
+        /* Extra responsive handling for very small devices (<=450px) */
+        @media (max-width: 550px) {
+            .buttons-area {
+                min-height: 340px;
+            }
+            .yes-btn, .no-btn {
+                padding: 8px 20px;
+                min-width: 110px;
+            }
+            .question {
+                margin: 12px 0 28px;
+                padding: 10px 18px;
+            }
+            body {
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .buttons-area {
+                min-height: 320px;
+            }
+            .yes-btn, .no-btn {
+                font-size: 1.4rem;
+                padding: 10px 18px;
+                min-width: 100px;
+            }
+            .question {
+                font-size: 1.3rem;
+            }
+            h1 {
+                margin-bottom: 6px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .buttons-area {
+                min-height: 300px;
+            }
+            .yes-btn, .no-btn {
+                font-size: 1.25rem;
+                padding: 8px 14px;
+                min-width: 90px;
+            }
+        }
+
+        /* landscape orientation fine-tune */
+        @media (max-height: 550px) and (orientation: landscape) {
+            .screen {
+                padding: 12px;
+            }
+            .buttons-area {
+                min-height: 240px;
+            }
+            .question {
+                margin: 8px 0 20px;
+            }
+            .final-image {
+                max-height: 50vh;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="screen" id="appScreen">
+    <h1>💖 Qanjoos 💖</h1>
+    <div class="question" id="questionText">Nimco maa ii noqonaysaa? 😍</div>
+    
+    <div class="buttons-area" id="buttonsArea">
+        <button class="yes-btn" id="yesBtn">Yes 💖</button>
+        <button class="no-btn" id="noBtn">No 😅</button>
+    </div>
+    
+    <!-- Hidden elements: counter, upload, footer (fully hidden but untouched) -->
+    <div class="counter"></div>
+    <div class="upload-area"></div>
+    <footer></footer>
+</div>
+
+<script>
+    (function() {
+        // ---------- CONFIGURATION ----------
+        // CUSTOM IMAGE (put your image "g.jpeg" in same folder or use any link)
+        // HALKAN SAWIRKAAGA KU DAR: waxaad halkan ku qori kartaa magaca faylka ama URL
+        const customImage = "g.jpeg";   // Isbedel haddii aad rabto sawir kale, ama iska daa haddii uu jiro.
+        // If you want a fallback in case image fails to load, we handle gracefully.
+        
+        // Qoraalo romantig ah oo kala duwan
+        const questions = [
+            "Nimco maa ii noqonaysaa? 😍",
+            "joog nimcooy 😍",
+            "dhiiqahaa lugaha laguu galinyaa 🥺",
+            "nimco qurux 🥰",
+            "? "
+        ];
+        
+        let tapCount = 0;
+        const MAX_TAPS = 7;
+        let questionIndex = 0;
+        
+        // DOM elements
+        let noButton = document.getElementById("noBtn");
+        let yesButton = document.getElementById("yesBtn");
+        let buttonsArea = document.getElementById("buttonsArea");
+        let questionEl = document.getElementById("questionText");
+        
+        // Helper: get area dimensions for responsive movement
+        function getAreaRect() {
+            return buttonsArea.getBoundingClientRect();
+        }
+        
+        function getBtnRect(btn) {
+            return btn.getBoundingClientRect();
+        }
+        
+        // Smart move: completely dynamic + far away from yes button, and also not outside container
+        function moveNoButtonFarAway() {
+            if (!noButton || !buttonsArea || tapCount >= MAX_TAPS) return;
+            
+            const areaRect = getAreaRect();
+            const btnRect = noButton.getBoundingClientRect();
+            const yesRect = yesButton.getBoundingClientRect();
+            
+            // Calculate relative positions inside container
+            const containerLeft = areaRect.left;
+            const containerTop = areaRect.top;
+            const containerWidth = areaRect.width;
+            const containerHeight = areaRect.height;
+            
+            // current absolute positions -> relative to container
+            const yesRelativeLeft = yesRect.left - containerLeft;
+            const yesRelativeTop = yesRect.top - containerTop;
+            const yesWidth = yesRect.width;
+            const yesHeight = yesRect.height;
+            const btnWidth = btnRect.width;
+            const btnHeight = btnRect.height;
+            
+            // possible margins to keep button fully inside
+            const maxLeft = Math.max(0, containerWidth - btnWidth - 8);
+            const maxTop = Math.max(0, containerHeight - btnHeight - 8);
+            
+            if (maxLeft <= 0 || maxTop <= 0) {
+                // fallback small movement if container is extremely tiny
+                noButton.style.left = "10px";
+                noButton.style.top = "10px";
+                noButton.style.right = "auto";
+                noButton.style.bottom = "auto";
+                return;
+            }
+            
+            let bestLeft = 0, bestTop = 0;
+            let bestDistance = -1;
+            let attempts = 0;
+            const totalAttempts = 40;
+            
+            // Try random positions and pick the one farthest from YES button center
+            while (attempts < totalAttempts) {
+                const randLeft = Math.random() * maxLeft;
+                const randTop = Math.random() * maxTop;
+                
+                // Calculate distance between centers
+                const noCenterX = randLeft + btnWidth / 2;
+                const noCenterY = randTop + btnHeight / 2;
+                const yesCenterX = yesRelativeLeft + yesWidth / 2;
+                const yesCenterY = yesRelativeTop + yesHeight / 2;
+                const distance = Math.hypot(noCenterX - yesCenterX, noCenterY - yesCenterY);
+                
+                if (distance > bestDistance) {
+                    bestDistance = distance;
+                    bestLeft = randLeft;
+                    bestTop = randTop;
+                }
+                attempts++;
+            }
+            
+            // Also ensure if distance still small, push to farthest corner
+            const cornerPositions = [
+                { left: 8, top: 8 },
+                { left: maxLeft - 8, top: 8 },
+                { left: 8, top: maxTop - 8 },
+                { left: maxLeft - 8, top: maxTop - 8 },
+                { left: maxLeft * 0.9, top: maxTop * 0.1 },
+                { left: maxLeft * 0.1, top: maxTop * 0.9 }
+            ];
+            
+            for (let corner of cornerPositions) {
+                const cornerLeft = Math.min(maxLeft, Math.max(0, corner.left));
+                const cornerTop = Math.min(maxTop, Math.max(0, corner.top));
+                const cornerCenterX = cornerLeft + btnWidth/2;
+                const cornerCenterY = cornerTop + btnHeight/2;
+                const yesCenterX = yesRelativeLeft + yesWidth/2;
+                const yesCenterY = yesRelativeTop + yesHeight/2;
+                const cornerDist = Math.hypot(cornerCenterX - yesCenterX, cornerCenterY - yesCenterY);
+                if (cornerDist > bestDistance) {
+                    bestDistance = cornerDist;
+                    bestLeft = cornerLeft;
+                    bestTop = cornerTop;
+                }
+            }
+            
+            // Clamp final positions
+            bestLeft = Math.min(maxLeft, Math.max(0, bestLeft));
+            bestTop = Math.min(maxTop, Math.max(0, bestTop));
+            
+            // Apply new position with relative coordinates (px)
+            noButton.style.position = "absolute";
+            noButton.style.left = bestLeft + "px";
+            noButton.style.top = bestTop + "px";
+            noButton.style.right = "auto";
+            noButton.style.bottom = "auto";
+            
+            // playful micro transform
+            noButton.style.transform = "scale(0.88) rotate(2deg)";
+            setTimeout(() => {
+                if (tapCount < MAX_TAPS && noButton) {
+                    noButton.style.transform = "scale(1) rotate(0deg)";
+                }
+            }, 130);
+        }
+        
+        // Show final screen with image & Somali text
+        function showFinalImage() {
+            const appScreen = document.getElementById("appScreen");
+            if (!appScreen) return;
+            
+            // Build final view with responsive image support
+            const finalTextContent = "🛑 yeyna igaga kaa fakan 😂🛑";
+            
+            let imageHtml = '';
+            if (customImage && customImage.trim() !== "") {
+                imageHtml = `
+                    <div style="display: flex; justify-content: center; width: 100%;">
+                        <img src="${customImage}" class="final-image" alt="Stop messing with me" onerror="this.onerror=null; this.style.display='none'; document.getElementById('fallbackText').style.display='block';">
+                    </div>
+                    <div id="fallbackText" class="final-text" style="display: none;">🛑 yeyna igaga kaa fakan 😂🛑</div>
+                    <div class="final-text" style="display: block;">🛑 yeyna igaga kaa fakan 😂🛑</div>
+                `;
+            } else {
+                imageHtml = `<div class="final-text" style="background: rgba(0,0,0,0.6); font-size: clamp(1.5rem, 6vw, 2rem);">🛑 yeyna igaga kaa fakan 😂🛑</div>`;
+            }
+            
+            appScreen.innerHTML = `
+                <div class="final-screen">
+                    ${imageHtml}
+                    <button class="reset-btn" id="resetBtn">🔄 Dib u bilow / Start over</button>
+                </div>
+            `;
+            
+            // handle fallback for broken image
+            if (customImage) {
+                const imgElement = document.querySelector('.final-image');
+                if (imgElement) {
+                    imgElement.onerror = function() {
+                        this.style.display = 'none';
+                        const fallbackDiv = document.getElementById('fallbackText');
+                        if (fallbackDiv) fallbackDiv.style.display = 'block';
+                        const extraDiv = document.querySelector('.final-text:not(#fallbackText)');
+                        if (extraDiv) extraDiv.style.display = 'none';
+                    };
+                }
+            }
+            
+            const resetBtn = document.getElementById("resetBtn");
+            if (resetBtn) {
+                resetBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    location.reload();
+                });
+            }
+        }
+        
+        // update question text based on tap count
+        function updateQuestion() {
+            if (questionIndex < questions.length) {
+                questionEl.innerText = questions[questionIndex];
+            } else {
+                // cycle randomly but soft
+                questionEl.innerText = questions[Math.floor(Math.random() * questions.length)];
+            }
+        }
+        
+        // Main action when No is triggered (hover, click, touch)
+        function handleNoAction(event) {
+            if (tapCount >= MAX_TAPS) return;
+            
+            // Prevent any default or bubbling
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            tapCount++;
+            
+            // Cycle question: change every tap (move through romantic list)
+            if (questionIndex < questions.length - 1) {
+                questionIndex++;
+            } else {
+                // loop gently
+                questionIndex = 0;
+            }
+            updateQuestion();
+            
+            // Animate the No button for fun
+            if (noButton) {
+                noButton.style.animation = "pop 0.12s ease";
+                setTimeout(() => {
+                    if (noButton) noButton.style.animation = "";
+                }, 120);
+            }
+            
+            // Move No button far away again
+            moveNoButtonFarAway();
+            
+            // Check if reached max taps: Show final image
+            if (tapCount === MAX_TAPS) {
+                showFinalImage();
+                return;
+            }
+            
+            // additional responsive reposition after small delay (ensure on resize events later)
+            setTimeout(() => {
+                if (tapCount < MAX_TAPS && noButton && buttonsArea) {
+                    moveNoButtonFarAway();
+                }
+            }, 20);
+        }
+        
+        // YES button click -> redirect to yes.html OR just a sweet effect
+        // But according to your code: redirect to yes.html, but also keep original playful vibe
+        function handleYesClick() {
+            // Add press effect
+            if (yesButton) {
+                yesButton.style.transform = "translate(-50%, -50%) translateY(4px)";
+                setTimeout(() => {
+                    if (yesButton) yesButton.style.transform = "translate(-50%, -50%) translateY(0)";
+                }, 120);
+            }
+            
+            // animate no button shaking to tease
+            if (noButton && tapCount < MAX_TAPS) {
+                noButton.style.animation = "shake 0.2s ease";
+                setTimeout(() => {
+                    if (noButton) noButton.style.animation = "";
+                }, 220);
+            }
+            
+            // Redirect to yes.html (as original desired)
+            setTimeout(() => {
+                window.location.href = "yes.html";
+            }, 80);
+        }
+        
+        // Initialize button positions & event listeners with responsive support
+        function init() {
+            if (!noButton || !yesButton || !buttonsArea) return;
+            
+            // Make sure area has relative position if not already
+            const style = window.getComputedStyle(buttonsArea);
+            if (style.position !== 'relative' && style.position !== 'absolute') {
+                buttonsArea.style.position = 'relative';
+            }
+            
+            // Set initial yes button centered (already in css, but ensure)
+            yesButton.style.position = "absolute";
+            yesButton.style.left = "50%";
+            yesButton.style.top = "50%";
+            yesButton.style.transform = "translate(-50%, -50%)";
+            
+            // initial No position far away
+            setTimeout(() => {
+                moveNoButtonFarAway();
+            }, 80);
+            
+            // attach events: both click and touchstart for mobile, plus mouseenter for desktop
+            noButton.addEventListener("click", handleNoAction);
+            noButton.addEventListener("touchstart", handleNoAction, { passive: false });
+            noButton.addEventListener("mouseenter", handleNoAction);
+            
+            yesButton.addEventListener("click", handleYesClick);
+            yesButton.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                handleYesClick();
+            }, { passive: false });
+            
+            // also ensure that any attempt to hover on yes doesn't cause issues
+            yesButton.addEventListener("mouseenter", (e) => {
+                // small playful effect: No button shakes if you hover yes
+                if (noButton && tapCount < MAX_TAPS) {
+                    noButton.style.animation = "shake 0.1s ease";
+                    setTimeout(() => {
+                        if (noButton) noButton.style.animation = "";
+                    }, 150);
+                }
+            });
+            
+            // Responsive: when window resizes or orientation changes, reposition No button
+            window.addEventListener("resize", () => {
+                if (tapCount < MAX_TAPS && noButton && buttonsArea) {
+                    setTimeout(() => {
+                        moveNoButtonFarAway();
+                        // ensure yes stays centered
+                        if (yesButton) {
+                            yesButton.style.left = "50%";
+                            yesButton.style.top = "50%";
+                            yesButton.style.transform = "translate(-50%, -50%)";
+                        }
+                    }, 30);
+                }
+            });
+            
+            window.addEventListener("orientationchange", () => {
+                setTimeout(() => {
+                    if (tapCount < MAX_TAPS && noButton && buttonsArea) {
+                        moveNoButtonFarAway();
+                        if (yesButton) {
+                            yesButton.style.left = "50%";
+                            yesButton.style.top = "50%";
+                        }
+                    }
+                }, 40);
+            });
+            
+            // Additional dynamic observer to keep area consistent if font loads
+            if (window.ResizeObserver) {
+                const resizeObserver = new ResizeObserver(() => {
+                    if (tapCount < MAX_TAPS && noButton && buttonsArea) {
+                        moveNoButtonFarAway();
+                    }
+                });
+                resizeObserver.observe(buttonsArea);
+            }
+        }
+        
+        // Start everything
+        init();
+        
+        // predefine question text initial
+        if (questionEl) questionEl.innerText = questions[0];
+    })();
+</script>
+</body>
+</html>
